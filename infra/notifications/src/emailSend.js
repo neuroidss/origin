@@ -1,5 +1,5 @@
 const fs = require('fs')
-const _ = require('lodash')
+const template = require('lodash/template')
 const sendgridMail = require('@sendgrid/mail')
 const Sequelize = require('sequelize')
 const web3Utils = require('web3-utils')
@@ -111,11 +111,11 @@ class EmailSender {
     const templateDir = `${__dirname}/../templates`
 
     // Standard template for HTML emails
-    const emailTemplateHtml = _.template(
+    const emailTemplateHtml = template(
       fs.readFileSync(`${templateDir}/emailTemplate.html`).toString()
     )
     // Standard template for text emails
-    const emailTemplateTxt = _.template(
+    const emailTemplateTxt = template(
       fs.readFileSync(`${templateDir}/emailTemplate.txt`).toString()
     )
 
@@ -225,11 +225,11 @@ class EmailSender {
     const templateDir = `${__dirname}/../templates`
 
     // Standard template for HTML emails
-    const emailTemplateHtml = _.template(
+    const emailTemplateHtml = template(
       fs.readFileSync(`${templateDir}/emailTemplate.html`).toString()
     )
     // Standard template for text emails
-    const emailTemplateTxt = _.template(
+    const emailTemplateTxt = template(
       fs.readFileSync(`${templateDir}/emailTemplate.txt`).toString()
     )
 
@@ -291,7 +291,7 @@ class EmailSender {
             groupId: this.config.asmGroupId
           }
         }
-
+        logger.info(email)
         await this._send(identity.ethAddress, email)
       } catch (error) {
         logger.error(`Could not email via Sendgrid: ${error}`)
